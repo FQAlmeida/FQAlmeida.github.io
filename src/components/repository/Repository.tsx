@@ -46,19 +46,20 @@ class Repositories extends Component<RepositoryProps, RepositoryState> {
                 {({ loading, error, data }) => {
                     if (loading) { return <p>loading</p> }
                     else if (data) {
-                        return <Fragment>
-                            {data?.viewer.repositories.nodes.map((repo, index) => {
-                                repo = { ...repo, createdAt: new Date(repo.createdAt) }
-                                return (
-                                    <div key={index}>
-                                        <p>{repo.name}</p>
-                                        <span>Created At: {repo.createdAt.toLocaleString()}</span>
-                                    </div>
-                                )
-                            })}
-                        </Fragment>
+                        return (
+                            <Fragment>
+                                {data?.viewer.repositories.nodes.map((repo, index) => {
+                                    repo = { ...repo, createdAt: new Date(repo.createdAt) }
+                                    return (
+                                        <div key={index}>
+                                            <p>{repo.name}</p>
+                                            <span>Created At: {repo.createdAt.toLocaleString()}</span>
+                                        </div>
+                                    )
+                                })}
+                            </Fragment>)
                     }
-                    return <p>{error}</p>
+                    return <p>{error?.message}</p>
                 }}
             </Query>
         )
