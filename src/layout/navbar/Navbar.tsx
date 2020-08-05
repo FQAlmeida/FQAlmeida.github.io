@@ -13,6 +13,9 @@ class Navbar extends Component {
                 <Link to="/">
                     Home
                 </Link>
+                <Link to="repositories">
+                    Repos
+                </Link>
             </header>
         )
     }
