@@ -1,0 +1,24 @@
+query {
+  viewer {
+    repositories(first: 100) {
+      totalCount
+      nodes {
+        name
+        owner {
+          login
+        }
+        description
+        createdAt
+        languages (first: 100){
+          nodes {
+            name
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}

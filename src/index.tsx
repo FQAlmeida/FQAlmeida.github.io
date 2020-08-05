@@ -1,13 +1,29 @@
-import React from 'react';
+// Global Imports
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Router } from 'react-router';
+import { ApolloProvider } from "@apollo/client"
+// Local Imports
 import * as serviceWorker from './serviceWorker';
+import WebsiteRouter from './router/router';
+import { history } from './router/router_configs';
+import Base from './layout/base/Base';
+import client from './graphql/client';
+
+const App: FC = () => {
+  return (
+    <ApolloProvider client={client}>
+      <Router history={history}>
+        <Base>
+          <WebsiteRouter />
+        </Base>
+      </Router>
+    </ApolloProvider>
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 
