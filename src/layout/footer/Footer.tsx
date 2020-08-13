@@ -9,7 +9,7 @@ import "./sass/footer.sass"
 class Footer extends Component {
     render() {
         return (
-            <footer>
+            <footer className="footer">
                 this is the footer
             </footer>
         )

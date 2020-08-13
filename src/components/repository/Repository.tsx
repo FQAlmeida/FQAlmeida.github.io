@@ -1,69 +1,62 @@
 // Global Imports
-import React, { Component, Fragment } from "react";
-import { loader } from "graphql.macro"
-import { Query } from "@apollo/client/react/components"
+import React, { Component } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { ThunkDispatch } from "redux-thunk";
+// Local Imports
+import { rootState } from "../../redux/store";
+import { IGithubReposGet, IGithubReposGetData } from "../../redux/actions/github/get_respositories_types";
+import { getPublicRepositories } from "../../redux/actions/github/get_repositories";
 
-const repo_query = loader("../../graphql/queries/repositories.gql")
 
-interface RepositoryState { }
+interface IRepositoryState { }
 
-interface RepositoryProps { }
+interface IRepositoryProps { }
 
-interface Language {
-    name: string
+interface IRepositoryStateProps { 
+    loading: boolean
+    error?: Error
+    repositories?: IGithubReposGetData
 }
+interface IRepositoryDispatchProps {
+    getRepositories: () => Promise<void>
+ }
 
-interface PageInfo {
-    endCursor: string,
-    hasNextPage: boolean
-}
-
-interface Repository {
-    name: string
-    createdAt: Date
-    owner: {
-        login: string
+const mapStateToProps = (state: rootState): IRepositoryStateProps => {
+    return {
+        loading: state.github.loading,
+        error: state.github.error,
+        repositories: state.github.data
     }
-    description: string
-    languages: { nodes: Array<Language> }
 }
 
-interface Data {
-    viewer: {
-        repositories: {
-            totalCount: number
-            nodes: Array<Repository>
-            pageInfo: PageInfo
+const mapDispatchToProps = (dispatch: ThunkDispatch<rootState, undefined, IGithubReposGet>): IRepositoryDispatchProps => {
+    return {
+        getRepositories: () => {
+            return dispatch(getPublicRepositories())
         }
     }
 }
 
+const connector = connect<
+    IRepositoryStateProps,
+    IRepositoryDispatchProps,
+    IRepositoryProps,
+    rootState>
+    (mapStateToProps, mapDispatchToProps);
 
-class Repositories extends Component<RepositoryProps, RepositoryState> {
+    type PropsFromRedux = ConnectedProps<typeof connector>
+
+type RepositoryProps = PropsFromRedux & IRepositoryProps
+
+class Repositories extends Component<RepositoryProps, IRepositoryState> {
+    componentDidMount(){
+        this.props.getRepositories();
+    }
     render() {
         return (
-            <Query<Data, undefined> query={repo_query}>
-                {({ loading, error, data }) => {
-                    if (loading) { return <p>loading</p> }
-                    else if (data) {
-                        return (
-                            <Fragment>
-                                {data?.viewer.repositories.nodes.map((repo, index) => {
-                                    repo = { ...repo, createdAt: new Date(repo.createdAt) }
-                                    return (
-                                        <div key={index}>
-                                            <p>{repo.name}</p>
-                                            <span>Created At: {repo.createdAt.toLocaleString()}</span>
-                                        </div>
-                                    )
-                                })}
-                            </Fragment>)
-                    }
-                    return <p>{error?.message}</p>
-                }}
-            </Query>
+            <p>repos</p>
         )
     }
 }
 
-export default Repositories;
+export default connector(Repositories);

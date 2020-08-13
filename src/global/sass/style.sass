@@ -1,0 +1,22 @@
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+    
+.container
+    width: 80vw;
+    max-width: 2080px
+    margin: 0 auto
+
+.row
+    display: flex
+    width: 100%
+    flex-wrap: wrap
+    --margin: 1rem
+    --modifier: calc( 40rem - 100% )
+    margin: calc( var(--margin) * -1  )
+
+    .col
+        flex-grow: 1
+        flex-basis: calc( var(--modifier) * 999  );
+        margin: var(--margin)

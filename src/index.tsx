@@ -1,26 +1,14 @@
 // Global Imports
-import React, { FC } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router } from 'react-router';
-import { ApolloProvider } from "@apollo/client"
 // Local Imports
 import * as serviceWorker from './serviceWorker';
-import WebsiteRouter from './router/router';
-import { history } from './router/router_configs';
-import Base from './layout/base/Base';
-import client from './graphql/client';
+import App from './App';
 
-const App: FC = () => {
-  return (
-    <ApolloProvider client={client}>
-      <Router history={history}>
-        <Base>
-          <WebsiteRouter />
-        </Base>
-      </Router>
-    </ApolloProvider>
-  )
-}
+// Global Style
+import "./global/sass/color.sass"
+import "./global/sass/style.sass"
+
 
 ReactDOM.render(
   <App />,

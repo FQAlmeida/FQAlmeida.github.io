@@ -1,5 +1,5 @@
 // Global Imports
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 
 // Local Imports
 import Navbar from "../navbar/Navbar"
@@ -11,11 +11,15 @@ import "./sass/base.sass"
 class Base extends Component {
     render() {
         return (
-            <Fragment>
+            <div className="base">
                 <Navbar />
-                {this.props.children}
+                <div className="base__content">
+                    <div className="container">
+                        {this.props.children}
+                    </div>
+                </div>
                 <Footer />
-            </Fragment>
+            </div>
         )
     }
 }
