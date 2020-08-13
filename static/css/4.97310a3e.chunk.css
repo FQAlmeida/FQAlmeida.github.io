@@ -1,0 +1,2 @@
+.home{display:grid;grid-template-areas:"description description banner";grid-row:auto;grid-column:auto}.home .home__description{margin:auto;grid-area:description;background-color:pink}.home .home__banner{margin:auto;grid-area:banner;background-color:green}
+/*# sourceMappingURL=4.97310a3e.chunk.css.map */
